@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %} Search Results {% endblock %}
+
+{% block body %} 
+<form method="POST">
+    <p>
+        <h1 align=center> Results </h1>
+    </p>
+    <div>
+        <p>
+            <h3> Results: </h3>
+            {% for carDetail in Result.results %}
+                <ul> 
+                    <li>
+                        Title of Post: 
+                        {% if "title" in carDetail.keys() %}
+                            {{carDetail.get("title")}} 
+                        {% elif "name" in carDetail.keys() %}
+                            {{carDetail.get("name")}} 
+                        {% endif %}
+                    </li>
+                    
+                    <li>
+                        URL: <a href={{carDetail.get("url")}}> {{carDetail.get("url")}} </a> 
+                    </li>
+                    
+                    <li>
+                        Price: {{carDetail.get("price")}} 
+                    </li>
+                </ul>
+            {% endfor %}
+        </p>
+    </div>
+</form>
+{% endblock %}

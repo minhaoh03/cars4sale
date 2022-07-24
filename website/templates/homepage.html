@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %} Cars4Sale {% endblock %}
+
+{% block body %} 
+<form method="POST">
+    <p>
+        <h1 align=center> Welcome to Cars4Sale! </h1>
+    </p>
+    <div>
+        <p>
+            <h3> Please enter the type of car you would like: <br/>
+                 *If left empty, all results will be displayed*
+            </h3>
+            <input id="search" name="search" placeholder="Car"></input> 
+            <h3> Please enter the state: </h3>
+            <input id="site" name="site" placeholder="State"></input> 
+            <h3> (Optional) Please enter a specific area you would like to find the car: </h3>
+            <input id="area" name="area" placeholder="Area"></input> 
+            <br/>
+            <br/>
+            <button type="submit" value="Submit">Submit</button>
+        </p>
+    </div>
+</form>
+{% endblock %}
