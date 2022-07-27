@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="static/main.css">
 </head>
 <body>
+    <ul class="navbar"> 
+        <li class="navbarItem"><a href="#login">Login</a></li>
+        <li class="navbarItem"><a href="#signup">Sign Up</a></li>
+        <li class="navbarItem"><a href="#aboutus">About Us</a></li>
+        <li class="navbarItem"><a href="/">Home</a></li>
+    </ul>
     {% block body %}
         
     {% endblock %}

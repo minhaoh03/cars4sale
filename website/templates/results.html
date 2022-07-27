@@ -3,6 +3,7 @@
 {% block title %} Search Results {% endblock %}
 
 {% block body %} 
+
 <form method="POST">
     <p>
         <h1 align=center> Results </h1>
@@ -13,7 +14,7 @@
             {% for carDetail in Result.results %}
                 <ul> 
                     <li>
-                        Title of Post: 
+                        <b>Title of Post:</b> 
                         {% if "title" in carDetail.keys() %}
                             {{carDetail.get("title")}} 
                         {% elif "name" in carDetail.keys() %}
@@ -22,13 +23,23 @@
                     </li>
                     
                     <li>
-                        URL: <a href={{carDetail.get("url")}}> {{carDetail.get("url")}} </a> 
+                        <b>URL:</b> <a href={{carDetail.get("url")}}> {{carDetail.get("url")}} </a> 
                     </li>
                     
                     <li>
-                        Price: {{carDetail.get("price")}} 
+                        <b>Price:</b> {{carDetail.get("price")}} 
+                    </li>
+
+                    <li>
+                        <b>City or Area:</b> 
+                        {% if "where" in carDetail.keys() %}
+                            {{carDetail.get("where")}}
+                        {% elif "neighborhood" in carDetail.keys() %}
+                            {{carDetail.get("neighborhood")}}
+                        {% endif %}
                     </li>
                 </ul>
+                <br/>
             {% endfor %}
         </p>
     </div>

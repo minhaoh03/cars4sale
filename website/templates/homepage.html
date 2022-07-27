@@ -3,24 +3,51 @@
 {% block title %} Cars4Sale {% endblock %}
 
 {% block body %} 
-<form method="POST">
-    <p>
-        <h1 align=center> Welcome to Cars4Sale! </h1>
-    </p>
-    <div>
-        <p>
-            <h3> Please enter the type of car you would like: <br/>
-                 *If left empty, all results will be displayed*
-            </h3>
-            <input id="search" name="search" placeholder="Car"></input> 
+<div class ='container'>
+    <form method="POST">
+        <div class='header'>
+            <h1> Welcome to Cars4Sale! </h1>
+        </div>
+        <div class='search'>
+            <h2> Please enter the type of car you would like: </h2>
+            <p style="margin: 0px; padding: 0 0 20px 0; font-size: 12px;"> *If left empty, all results will be displayed* <p>
+            <input class='searchBar' id="search" name="search" placeholder="Car"></input> 
+
+            <!--
             <h3> Please enter the state: </h3>
             <input id="site" name="site" placeholder="State"></input> 
             <h3> (Optional) Please enter a specific area you would like to find the car: </h3>
             <input id="area" name="area" placeholder="Area"></input> 
-            <br/>
-            <br/>
-            <button type="submit" value="Submit">Submit</button>
-        </p>
-    </div>
-</form>
+            -->
+                
+            <br/> <br/>
+            <button class="submitButton" type="submit" value="Submit">Submit</button>
+        </div> <!--Search-->
+        <div class='content'>
+            <div class='image'>
+                <img src='static/main-content.jpeg' id='jeep' alt='jeep in the plains'>
+            </div>
+            <div class='description'>
+                <h2> Welcome To Your New Go-To For Car Deals! </h2>
+                <p><b>Cars4Sale creates a brand new meaning to easy-to-access and quick!</b></p>
+                <p>  
+                    Our car inventory data is collected through sites <b>all over the world</b>, and is provided to you
+                    with <b>free</b> and <b>immediate</b> access! 
+                </p>
+                <p>
+                    Not only do we provide the descriptions of each car within our inventory, but we also provide links and 
+                    neccessary information that will allow you to quickly find the most suitable car for you!
+                </p>
+                <p>
+                    Register now with our site, and <b>not only</b> gain access to bookmarking deals that have intrigued you, but also benefit from using our 
+                    <b>filter functions</b> so that you may look for cars that match your needs!
+                </p>
+                <p>
+                    <br/>
+                    <h3><a href='#signup' id='quicksignup'>Sign Up Now!</a><h3>
+                </p>
+            </div>    
+        </div> <!--Content-->
+    </form>
+<div class = 'container'>
 {% endblock %}

@@ -8,6 +8,7 @@ db = SQLAlchemy()
 
 DB_NAME = 'database.db'
 SKEY = '6ac97b1378900b1b09b9f86710a8f2fd'
+POSSTACKKEY = '52382ded2394b8158b1ae36a14adb9d7'
 
 def createApp():
     app = Flask(__name__)

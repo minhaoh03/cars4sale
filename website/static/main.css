@@ -1,0 +1,114 @@
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    background-color: #e2e2e2;
+}
+
+.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 100px #548119;
+    background-color: #548119;
+    border-bottom: 2px solid black;
+}
+
+.navbarItem {
+    float: right;
+    padding: 12px 0
+}
+
+.navbarItem a {
+    text-decoration: none;
+    color: white;
+    padding: 12px 12px;
+}
+
+.navbarItem:hover {
+    background-color: #80c22a;
+}
+
+.header {
+    border: 5px inset rgb(174, 255, 181);
+    border-radius: 20px;
+    text-align: center;
+    width: 500px;
+    height: 80px;
+    margin: 20px auto;
+}
+
+.header h1{
+    font-weight: 600;
+    margin: 0;
+    padding: 20px 0;
+    color: transparent;
+    background-image: linear-gradient(to right,#2b4629 20%, #0e6922 40%, #1aaf58 60%, #25af4f 80%, #77ffd4);
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+.search {
+    text-align: center;
+}
+
+.searchBar {
+    padding: 4px 12px 4px;
+    font-size: 16px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    caret-color: #548119;
+    border: 3px solid #548119;
+    border-radius: 8px;
+    width: 50%;
+    text-align: center;
+}
+
+.submitButton {
+    background-color: #548119;
+    color: #ffffff;
+    padding: 10px 12px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: 1px solid #ffffff;
+    transition-duration: 0.4s;
+    width: 250px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.submitButton:hover {
+    background-color: #ffffff;
+    color: #548119;
+    border: 1px solid #548119;
+}
+
+.content {
+    margin: 0 30px;
+}
+
+#jeep {
+    float: left;
+    width: 300px; 
+    height: 400px;
+    padding: 30px 40px 30px 0;
+}
+
+.description {
+    font-size: 20px;
+    display: block;
+    padding: 30px 0;
+}
+
+#quicksignup {
+    text-decoration: none; 
+    background-color: white; 
+    color: black; 
+    border: 2px solid #548119; 
+    border-radius: 10px; 
+    padding: 10px; 
+    transition-duration: 0.4s;
+}
+
+#quicksignup:hover {
+    background-color: #91dd8a; 
+}
