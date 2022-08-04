@@ -21,9 +21,6 @@ class Result(db.Model):
     img = db.Column(db.String)
     resultsToImg = {}
     results = []
-    
-class Inventory(db.Model):
-    results = []
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
