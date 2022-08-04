@@ -85,15 +85,16 @@ def getLocation(ip):                    # Location getter of an ip address
 
 @pages.route('/', methods=['POST','GET'])                       # Home Page
 def homepage():
-    if request.method == 'POST': 
-        ip = request.environ['REMOTE_ADDR']       
+    ip = request.environ['REMOTE_ADDR']  
+    
+    if request.method == 'POST':  
         location = getLocation(ip)
 
         region = location.get('regionName')
         
         postedSearch = request.form.get('search')      
         return redirect(url_for('pages.results', search=postedSearch, region=region))
-    return render_template('homepage.html')
+    return render_template('homepage.html', ip=ip)
 
 @pages.route('/results', methods=['POST','GET'])                    # Results Page
 def results():
