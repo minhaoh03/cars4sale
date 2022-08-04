@@ -82,10 +82,13 @@ def getLocation(ip):                    # Location getter of an ip address
     js = response.json()
     return js
 
+def getIP():
+    return jsonify({'ip': request.remote_addr})
+
 @pages.route('/', methods=['POST','GET'])                       # Home Page
 def homepage():
     if request.method == 'POST': 
-        ip = "100.36.38.25"        
+        ip = getIP        
         location = getLocation(ip)
 
         region = location.get('regionName')
