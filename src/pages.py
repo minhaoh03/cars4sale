@@ -85,7 +85,7 @@ def getLocation(ip):                    # Location getter of an ip address
 
 @pages.route('/', methods=['POST','GET'])                       # Home Page
 def homepage():
-    ip = request.environ['REMOTE_ADDR']  
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr)
     
     if request.method == 'POST':  
         location = getLocation(ip)
