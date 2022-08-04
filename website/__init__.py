@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
 from os import path
 import pycraigslist
+from flask_login import LoginManager
 
 db = SQLAlchemy()
 
@@ -20,7 +21,17 @@ def createApp():
 
     app.register_blueprint(pages, url_prefix='/')
     
+    login_manager = LoginManager()
+    login_manager.login_view = 'pages.login'
+    login_manager.init_app(app)
+    
     createDB(app)
+    
+    from .models import User
+    
+    @login_manager.user_loader
+    def load_user(id):
+        return User.query.get(int(id))
     
     return app
     

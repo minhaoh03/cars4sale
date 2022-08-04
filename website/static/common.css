@@ -1,0 +1,65 @@
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    background-color: #e2e2e2;
+}
+
+.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #548119;
+    border-bottom: 2px solid black;
+}
+
+.navbarItem {
+    float: right;
+    padding: 12px 0
+}
+
+.navbarItem a {
+    text-decoration: none;
+    color: white;
+    padding: 12px 12px;
+}
+
+.navbarItem:hover {
+    background-color: #80c22a;
+}
+
+.flash {
+    margin: 10px 20px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.success {
+    background-color: #d0ffbe;
+    border: 2px solid #98ce82;
+}
+
+.error {
+    background-color: #ffafaf;
+    border: 2px solid #ff6d6d;
+}
+
+.message {
+    background-color: #feffdc;
+    border: 2px solid #fffc3b;
+}
+
+.close {
+    position: absolute;
+    right: 30px;
+    top: 62px;
+    font-size: 22px;
+    border: 0px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.close:hover {
+    cursor:pointer;
+}

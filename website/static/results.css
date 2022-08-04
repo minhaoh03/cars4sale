@@ -1,0 +1,57 @@
+.results {
+    position: absolute;
+    left: 130px;
+    flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.resultsItems {
+    padding: 0;
+    margin: 10px;
+    width: 300px;
+    height: 400px;
+    text-align: center;
+    border: 2px solid #c0c0c0;
+    word-wrap: break-word;
+}
+
+.resultsItems:hover {
+    border: 2px solid #4f9932;
+}
+
+.resultImage {
+    height: 225px;
+}
+
+.resultImage img {
+    width: 300px;
+    height: 225px;
+}
+
+.resultDesc {
+    height: 175px;
+    background-color: #cedee9;
+}
+
+.itemTitle {
+    font-size: 20px;
+}
+
+.itemPrice {
+    font-size: 25px;
+    color: #0e6922;
+    font-weight: 700;
+}
+
+.itemLocation {
+    font-size: 15px;
+}
+
+.itemTime {
+    font-size: 13px;
+}
+
+.itemUrl {
+    font-size: 15px;
+}

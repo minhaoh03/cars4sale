@@ -1,47 +1,59 @@
 {% extends "base.html" %}
 
-{% block title %} Search Results {% endblock %}
+{% block title %} Cars4Sale - Search Results {% endblock %}
+
+{% block style %} <link rel="stylesheet" href="static/results.css"> {% endblock %}
 
 {% block body %} 
 
 <form method="POST">
-    <p>
-        <h1 align=center> Results </h1>
-    </p>
-    <div>
+    <div class ='container'> <!--Total Container-->
         <p>
-            <h3> Results: </h3>
+            <h1 align=center>
+                <u> 
+                    {% if Result.search != "" %}
+                        Showing results for "{{ Result.search }}" 
+                    {% else %}
+                        Showing all results 
+                    {% endif %}
+                        in the {{ Result.region }} area 
+                </u>
+            </h1>
+        </p>      
+        <div class = 'results'> <!--All Results Container-->
             {% for carDetail in Result.results %}
-                <ul> 
-                    <li>
-                        <b>Title of Post:</b> 
-                        {% if "title" in carDetail.keys() %}
-                            {{carDetail.get("title")}} 
-                        {% elif "name" in carDetail.keys() %}
-                            {{carDetail.get("name")}} 
+                <div class = 'resultsItems'> <!--Each Result Item-->
+                    <div class = 'resultImage'>
+                        <!--Image (Must be checked)-->
+                        {% if Result.resultsToImg[carDetail.get('title')] is not none %}       
+                            <img src="{{ Result.resultsToImg[carDetail.get('title')] }}">
                         {% endif %}
-                    </li>
-                    
-                    <li>
-                        <b>URL:</b> <a href={{carDetail.get("url")}}> {{carDetail.get("url")}} </a> 
-                    </li>
-                    
-                    <li>
-                        <b>Price:</b> {{carDetail.get("price")}} 
-                    </li>
+                        <br/>
+                    </div>
+                    <div class = 'resultDesc'>
+                        <!--Title-->
+                        <span class = 'itemTitle'> {{carDetail.get("title")}} </span>
+                        <br/>
+                        
+                        <!--Price-->
+                        <span class = 'itemPrice'> {{carDetail.get("price")}} </span>
+                        <br/> 
+                                                        
+                        <!--Location-->
+                        <!--<span class = 'itemLocation'> {{carDetail.get("neighborhood")}} </span>
+                        <br/>   -->
 
-                    <li>
-                        <b>City or Area:</b> 
-                        {% if "where" in carDetail.keys() %}
-                            {{carDetail.get("where")}}
-                        {% elif "neighborhood" in carDetail.keys() %}
-                            {{carDetail.get("neighborhood")}}
-                        {% endif %}
-                    </li>
-                </ul>
-                <br/>
+                        <!--Last Updated-->
+                        <span class = 'itemTime'> {{carDetail.get("last_updated")}} </span>
+                        <br/>
+
+                        <!--Url-->
+                        <span class = 'itemUrl'><a href={{carDetail.get("url")}}> Link to the Sale! </a> </span>
+                        <br/>
+                    </div>
+                </div> <!--resultItems-->
             {% endfor %}
-        </p>
-    </div>
+        </div> <!--results-->
+    </div> <!--container-->
 </form>
 {% endblock %}

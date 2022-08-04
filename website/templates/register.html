@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+Cars4Sale - Register
+{% endblock %}
+
+{% block body %}
+    <form method="POST">
+        <p> 
+            <h2 align="center">  Sign Up Here: </h2> 
+        </p>
+        <p>
+            <div class="form">
+                <p>
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter Email"></input>
+                </p>
+                <p>
+                    <label for="pw">Password:</label>
+                    <input type="password" id="pw" name="pw" placeholder="Enter Password"></input>
+                </p>
+                <p>
+                    <label for="confpw">Confirm Password:</label>
+                    <input type="password" id="confpw" name="confpw" placeholder="Re-enter Password"></input>
+                </p>
+                <p>
+                    <button type="submit" value="Submit">Submit</button>
+                </p>
+            </div>
+    </form>
+{% endblock %}

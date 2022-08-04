@@ -1,12 +1,25 @@
-from re import L
-from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, session
-from .__init__ import POSSTACKKEY
 import json
-from .models import Result
+from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, session
 import requests
-import http.client, urllib.parse
+from . import db
 
-from craigslist import CraigslistForSale                #CTA for cars and trucks
+#Flask login
+from flask_login import login_required, login_user, logout_user, current_user
+
+#For password hashes
+from werkzeug.security import generate_password_hash, check_password_hash
+
+#Result Models
+from .models import Result, User
+
+#Position Stack Key API
+from .__init__ import POSSTACKKEY
+
+#Image
+import http.client, urllib.parse    
+from bs4 import BeautifulSoup
+
+#Craigslist API
 import pycraigslist
 
 pages = Blueprint('pages', __name__)    
@@ -64,82 +77,107 @@ stateMap = {'Alabama' : ['bham', 'mobile', 'montgomery', 'huntsville', 'tuscaloo
             'District of Columbia' : ['washingtondc'],
             }
 
-# def posStack(lat, lon):                                                                       DON'T NEED THIS METHOD FOR NOW
-#     positionStackConnection = http.client.HTTPConnection('api.positionstack.com')
-
-#     pos = str(lat) + "," + str(lon)
-    
-#     params = urllib.parse.urlencode({
-#         'access_key': '52382ded2394b8158b1ae36a14adb9d7',
-#         'query': pos,
-#         'limit': 1,
-#     })
-
-#     positionStackConnection.request('GET', '/v1/reverse?{}'.format(params))
-
-#     res = positionStackConnection.getresponse()
-#     data = res.read()
-#     return data.decode('utf-8')
-
-def getLocation(ip):
+def getLocation(ip):                    # Location getter of an ip address
     response = requests.get("http://ip-api.com/json/{}?fields=regionName".format(ip))
     js = response.json()
     return js
 
-@pages.route('/', methods=['POST','GET'])
+@pages.route('/', methods=['POST','GET'])                       # Home Page
 def homepage():
     if request.method == 'POST': 
-        postedSearch = request.form.get('search')      
-        postedSite = request.form.get('site')  
-        postedArea = request.form.get('area')
-        return redirect(url_for('pages.results', search=postedSearch, site=postedSite, area=postedArea))
-    elif request.method == 'GET':
-        ip = "207.228.238.7"        #24.48.0.1
+        ip = "100.36.38.25"        
         location = getLocation(ip)
 
-        regionOrState = location.get('regionName')
+        region = location.get('regionName')
+        
+        postedSearch = request.form.get('search')      
+        return redirect(url_for('pages.results', search=postedSearch, region=region))
     return render_template('homepage.html')
 
-@pages.route('/results', methods=['POST','GET'])
+@pages.route('/results', methods=['POST','GET'])                    # Results Page
 def results():
-    ip = "192.199.248.75"        #24.48.0.1
-    location = getLocation(ip)
-
-    region = location.get('regionName')
-    
-    postedSearch = request.args.get('search', None)
-    # postedSite = request.args.get('site', None)
-    # postedArea = request.args.get('area', None)
-    
     newResult = Result()
     newResult.results.clear()
-
-    if postedSearch != '':
-        for state in stateMap.get(region):
-            cars = pycraigslist.forsale.cta(site=stateMap.get(region)[0], query=postedSearch)
-            for car in cars.search(limit=10):
-                newResult.results.append(car)
-    else:
-        for state in stateMap.get(region):
-            cars = CraigslistForSale(site=stateMap.get(region)[0], category='cta')
-            for car in cars.get_results(sort_by='newest', limit=10):
-                newResult.results.append(car)
     
-    # if postedSearch != '':
-    #     searched = True
-    #     if postedSite == "":
-    #         if postedArea == "":
-    #             cars = pycraigslist.forsale.cta(site='sfbay', query=postedSearch)
-    #         else:
-    #             cars = pycraigslist.forsale.cta(site='sfbay', area=postedArea, query=postedSearch)
-    #     elif postedArea == '':
-    #         cars = CraigslistForSale(site=postedSite, category='cta')
-    #     else:
-    #         cars = pycraigslist.forsale.cta(site=postedSite, area=postedArea, query=postedSearch)
-    # elif postedArea == '':
-    #     cars = CraigslistForSale(site=postedSite, category='cta')
-    # else:
-    #     cars = CraigslistForSale(site=postedSite, area=postedArea, category='cta')
+    newResult.search = request.args.get('search')
+    newResult.region = request.args.get('region')
+
+    for city in stateMap.get(newResult.region):
+        cars = pycraigslist.forsale.cta(site=city, query=newResult.search)     
+        for car in cars.search(limit=1):
+            carURL = car.get('url')
+            carTitle = car.get('title')
+            carPrice = car.get('price')
+            soup = BeautifulSoup(requests.get(carURL).text, 'html.parser')
+            allImgs = soup.find('img')
+            if allImgs is not None and not carTitle in newResult.resultsToImg and carPrice != '$0':     #If there is an image, not a replicate, and the price is not 0, show the result on the webpage
+                img = soup.find('img')['src']
+                newResult.resultsToImg[carTitle] = img
+                newResult.results.append(car)
+            print(car)
     return render_template('results.html', Result=newResult)
                     
+@pages.route('/aboutus', methods=['GET'])                           # About Us Page
+def aboutus():
+    return render_template('aboutus.html')
+
+@pages.route('/profile', methods=['POST','GET'])                # Profile Page
+@login_required
+def profile():
+    if request.method == 'GET':
+        pass
+    return render_template('profile.html', user=current_user)
+
+@pages.route('/register', methods=['POST','GET'])                           # Register Page
+def register():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('pw')
+        confpassword = request.form.get('confpw')
         
+        user = User.query.filter_by(email=email).first()
+        
+        if user:
+            flash('Email already exists.', category='ERROR')
+        elif len(email) < 4:
+            flash('Invalid Email: Email must be greater than 4 characters.', category='ERROR')
+        elif len(password) < 6:
+            flash('Invalid Password: Password must be at least 6 or more characters.', category='ERROR')
+        elif password != confpassword:
+            flash('Invalid Confirmation: Passwords do not match.', category='ERROR')
+        else:
+            newUser = User(email=email, password=generate_password_hash(password, method='sha256'))
+            db.session.add(newUser)
+            db.session.commit()
+            login_user(newUser)
+            flash('Account created!', category='SUCCESS')
+            return redirect(url_for('pages.homepage'))
+    return render_template('register.html')
+
+@pages.route('/login', methods=['POST','GET'])                      # Login Page
+def login():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('pw')
+        
+        user = User.query.filter_by(email=email).first()
+        
+        if user:
+            if check_password_hash(user.password, password):
+                flash('Logged in successfully!', category='SUCCESS')
+                login_user(user, remember=True)
+                return redirect(url_for('pages.homepage'))
+            else:
+                flash('Incorrect Password', category='ERROR')
+        else:
+            flash('No user with that email', category='ERROR')
+    return render_template('login.html')
+
+@pages.route('/logout', methods=['GET'])                        # Logout Page
+def logout():           
+    if not current_user.is_authenticated:
+        flash('You are not logged in', category='message')
+    else:
+        logout_user()
+        flash('Successfully Logged Out!', category='SUCCESS')
+    return redirect(url_for('pages.homepage'))
