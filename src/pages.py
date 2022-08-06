@@ -10,7 +10,7 @@ from flask_login import login_required, login_user, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 #Result Models
-from .models import Result, User
+from .models import Result, User, Car
 
 #Position Stack Key API
 from .__init__ import POSSTACKKEY
@@ -20,6 +20,10 @@ from bs4 import BeautifulSoup
 
 #Craigslist API
 import pycraigslist
+
+#Time
+from datetime import datetime, timedelta
+from pytz import timezone
 
 pages = Blueprint('pages', __name__)    
 
@@ -84,7 +88,8 @@ def getLocation(ip):                    # Location getter of an ip address
 
 @pages.route('/', methods=['POST','GET'])                       # Home Page
 def homepage():
-    ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    # ip = request.headers.get('X-Forwarded-For', request.remote_addr)  Deploy
+    ip = '207.228.238.7' 
     
     if request.method == 'POST':  
         location = getLocation(ip)
@@ -97,26 +102,42 @@ def homepage():
 
 @pages.route('/results', methods=['POST','GET'])                    # Results Page
 def results():
-    newResult = Result()
-    newResult.results.clear()
+    # newResult = Result()
+    # newResult.results.clear()
     
-    newResult.search = request.args.get('search')
-    newResult.region = request.args.get('region')
+    # newResult.search = request.args.get('search')
+    # newResult.region = request.args.get('region')
 
-    for city in stateMap.get(newResult.region):
-        cars = pycraigslist.forsale.cta(site=city, query=newResult.search)     
-        for car in cars.search(limit=1):
-            carURL = car.get('url')
-            carTitle = car.get('title')
-            carPrice = car.get('price')
-            soup = BeautifulSoup(requests.get(carURL).text, 'html.parser')
-            allImgs = soup.find('img')
-            if allImgs is not None and not carTitle in newResult.resultsToImg and carPrice != '$0':     #If there is an image, not a replicate, and the price is not 0, show the result on the webpage
-                img = soup.find('img')['src']
-                newResult.resultsToImg[carTitle] = img
-                newResult.results.append(car)
-            print(car)
-    return render_template('results.html', Result=newResult)
+    # for city in stateMap.get(newResult.region):
+    #     cars = pycraigslist.forsale.cta(site=city, query=newResult.search)     
+    #     for car in cars.search(limit=1):
+    #         carURL = car.get('url')
+    #         carTitle = car.get('title')
+    #         carPrice = car.get('price')
+    #         soup = BeautifulSoup(requests.get(carURL).text, 'html.parser')
+    #         allImgs = soup.find('img')
+    #         if allImgs is not None and not carTitle in newResult.resultsToImg and carPrice != '$0':     #If there is an image, not a replicate, and the price is not 0, show the result on the webpage
+    #             img = soup.find('img')['src']
+    #             newResult.resultsToImg[carTitle] = img
+    #             newResult.results.append(car)
+    search = request.args.get('search')
+    region = request.args.get('region')
+    
+    tz = timezone('EST')
+    
+    for city in stateMap.get(region):
+        results = pycraigslist.forsale.cta(site=city, query=search)
+        for car in results.search(limit=5):
+            if (db.session.query(Car).filter(Car.title==car.get('title')).first() == None or db.session.query(Car).filter(Car.title==car.get('title')).first().__dict__['title'] != car.get('title')) and car.get('price') != '$0':
+                soup = BeautifulSoup(requests.get(car.get('url')).text, 'html.parser')
+                allImgs = soup.find('img')
+                if allImgs is not None:
+                    dateFormat = datetime.strptime(car.get('last_updated'), '%Y-%m-%d %H:%M')
+                    curCar = Car(country='US', region=region, area=car.get('area'), image=allImgs['src'], title=car.get('title'), price=car.get('price'), link=car.get('url'), datePosted=dateFormat)
+                    db.session.add(curCar)
+                    db.session.commit()
+    
+    return render_template('results.html', search=search, region=region, Result=[u.__dict__ for u in db.session.query(Car).filter(Car.datePosted >= datetime.now(tz)-timedelta(days=3)).all()])
                     
 @pages.route('/aboutus', methods=['GET'])                           # About Us Page
 def aboutus():

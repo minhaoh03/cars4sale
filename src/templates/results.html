@@ -11,23 +11,21 @@
         <p>
             <h1 align=center>
                 <u> 
-                    {% if Result.search != "" %}
-                        Showing results for "{{ Result.search }}" 
+                    {% if search != "" %}
+                        Showing results for "{{ search }}" 
                     {% else %}
                         Showing all results 
                     {% endif %}
-                        in the {{ Result.region }} area 
+                        in the {{ region }} area 
                 </u>
             </h1>
         </p>      
         <div class = 'results'> <!--All Results Container-->
-            {% for carDetail in Result.results %}
+            {% for carDetail in Result %}
                 <div class = 'resultsItems'> <!--Each Result Item-->
                     <div class = 'resultImage'>
-                        <!--Image (Must be checked)-->
-                        {% if Result.resultsToImg[carDetail.get('title')] is not none %}       
-                            <img src="{{ Result.resultsToImg[carDetail.get('title')] }}">
-                        {% endif %}
+                        <!--Image-->  
+                            <img src="{{ carDetail.get("image") }}">
                         <br/>
                     </div>
                     <div class = 'resultDesc'>
@@ -44,7 +42,7 @@
                         <br/>   -->
 
                         <!--Last Updated-->
-                        <span class = 'itemTime'> {{carDetail.get("last_updated")}} </span>
+                        <span class = 'itemTime'> {{carDetail.get("datePosted")}} </span>
                         <br/>
 
                         <!--Url-->
