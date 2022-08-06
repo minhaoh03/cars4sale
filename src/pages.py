@@ -15,8 +15,7 @@ from .models import Result, User
 #Position Stack Key API
 from .__init__ import POSSTACKKEY
 
-#Image
-import http.client, urllib.parse    
+#Image 
 from bs4 import BeautifulSoup
 
 #Craigslist API
