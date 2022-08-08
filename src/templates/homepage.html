@@ -5,22 +5,35 @@
 {% block style %} <link rel="stylesheet" href="static/homepage.css"> {% endblock %}
 
 {% block body %} 
-<div class ='container'>
+<div class ='container'> <!--Total container-->
     <form method="POST">
+
+        <!--Header-->
         <div class='header'>
             <h1> Welcome to Cars4Sale! </h1>
         </div> <!--Header-->
+
+        <!--Search-->
         <div class='search'>
             <h2> Please enter the type of car you would like: </h2>
+
             <p style="margin: 0px; padding: 0 0 20px 0; font-size: 12px;"> *If left empty, all results will be displayed* <p>
+
             <input class='searchBar' id="search" name="search" placeholder="Search by Model/Type/Brand"></input> 
             <br/> <br/>
+            
             <button class="submitButton" type="submit" value="Submit">Submit</button>
         </div> <!--Search-->
+
+        <!--Content-->         
         <div class='content'>
+
+            <!--Jeep image-->
             <div class='image'>
                 <img src='static/main-content.jpeg' id='jeep' alt='jeep in the plains'>
-            </div> <!--Jeep-->
+            </div> <!--Jeep image-->
+
+            <!--Description-->
             <div class='description'>
                 <h2> Welcome To Your New Go-To For Car Deals! </h2>
                 <p><b>Cars4Sale is creating a brand new meaning to quick and easy shopping!</b></p>
@@ -41,7 +54,9 @@
                     <h3><a href='/register' id='quicksignup'>Sign Up Now!</a><h3>
                 </p>
             </div>  <!--Desc-->
+
         </div> <!--Content-->
+
     </form>
 <div class = 'container'>
 {% endblock %}

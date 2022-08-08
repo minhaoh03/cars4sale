@@ -5,8 +5,7 @@
 {% block style %} <link rel="stylesheet" href="static/results.css"> {% endblock %}
 
 {% block body %} 
-
-<form method="POST">
+<form method='POST'>
     <div class ='container'> <!--Total Container-->
         <p>
             <h1 align=center>
@@ -46,8 +45,13 @@
                         <br/>
 
                         <!--Url-->
-                        <span class = 'itemUrl'><a href={{carDetail.get("link")}}> Link to the Sale! </a> </span>
+                        <span class = 'itemUrl'><a href={{carDetail.get("link")}}> Link to the Sale! </a></span>
                         <br/>
+                        
+                        <!--Favorite Button (Only when User is authenticated)-->
+                        {% if current_user.is_authenticated %}
+                            <button id='favButton' name='favButton' type='submit' value={{carDetail.get("id")}}>Favorite</button>
+                        {% endif %}
                     </div>
                 </div> <!--resultItems-->
             {% endfor %}
