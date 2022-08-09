@@ -10,19 +10,44 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #548119;
-    border-bottom: 2px solid black;
+    background-color: #2e2e2e;
+}
+
+.logoText {
+    position: relative;
+    left: 20px;
+    top: 8px;
+    
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 800;
+    font-size: 30px;
+    
+}
+
+.logoText a {
+    color: #92e9a5;
+    text-decoration: none;
+}
+
+#logo {
+    position: absolute;
+    height: 30px;
+    width: 80px;
+    top: 10px;
+    left: 180px;
+    padding: 0;    
 }
 
 .navbarItem {
     float: right;
-    padding: 12px 0
+    padding: 15px 0px;
 }
 
 .navbarItem a {
     text-decoration: none;
     color: white;
-    padding: 12px 12px;
+    padding: 15px 20px;
+    font-size: 14px;
 }
 
 .navbarItem:hover {
@@ -54,7 +79,7 @@ body {
 .close {
     position: absolute;
     right: 30px;
-    top: 62px;
+    top: 65px;
     font-size: 22px;
     border: 0px;
     background-color: rgba(0, 0, 0, 0);

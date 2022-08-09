@@ -4,25 +4,22 @@
 Cars4Sale - Log In
 {% endblock %}
 
+{% block style %}
+<link rel="stylesheet" href="static/auth.css">
+{% endblock %}
+
 {% block body %}
     <form method="POST">
-        <p> 
-            <h2 align="center"> Log In: </h2> 
-        </p>
-        <p>
-            <div class="form">
-                <p>
-                    <label for="email">Email Address:</label>
-                    <input type="email" id="email" name="email" placeholder="Enter Email"></input>
-                </p>
-                <p>
-                    <label for="pw">Password:</label>
-                    <input type="password" id="pw" name="pw" placeholder="Enter Password"></input>
-                </p>
-                <p>
-                    <button type="submit" value="Login">Login</button>
-                </p>
+        <div class="form-container">
+            <div class="form-inputs">
+                <h1 id='loginh1'> Welcome Back </h1>
+                <input type="email" id="email" name="email" placeholder="Enter Email"></input>
+                <input type="password" id="pw" name="pw" placeholder="Enter Password"></input>
+                <label> Don't have an account? <a href='/register'> &nbsp; Sign up here! </a></label>
+                <button type="submit" value="Login">LOGIN</button>
             </div>
+            <img src="static/authimage2.jpg">
+        </div>
     </form>
 
 {% endblock %}
