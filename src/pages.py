@@ -130,7 +130,7 @@ def results():
     region = request.args.get('region')
     tz = timezone('EST')
     
-    searchLimit = 5         # For how many cars to be returned by pycraigslist
+    searchLimit = 1         # For how many cars to be returned by pycraigslist
     
     howOld = 5          # For how old the car must be in the database to be shown
     

@@ -7,18 +7,36 @@
     margin: 20px auto;
 }
 
-.header h1{
-    font-weight: 600;
-    margin: 0;
-    padding: 20px 0;
-    color: transparent;
-    background-image: linear-gradient(to right,#2b4629 20%, #0e6922 40%, #1aaf58 60%, #25af4f 80%, #77ffd4);
-    background-clip: text;
-    -webkit-background-clip: text;
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.intro {
+    position: absolute;
+    top: 59px; left: 0;
+    
+    width: 100%;
+    height: 65%;
+}
+
+.intro::before {
+    content: "";
+    position: absolute;
+    top: 0px; left: 0;
+    background-image: url('homepagemain.jpg');
+    background-position: center;
+    filter: brightness(70%);
+    width: 100%; height: 100%;
 }
 
 .search {
+    position: relative;
     text-align: center;
+    top: 40%;
 }
 
 .searchBar {
@@ -27,72 +45,25 @@
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     caret-color: #548119;
     background: url(/static/searchbaricon.png) left no-repeat#ffffff;
-    background-size: 30px;
-    border: 3px solid #548119;
-    border-radius: 8px;
-    width: 50%;
+    background-size: 20px;
+    background-position: 2%;
+    
+    border: 3px solid #caffd3;
+    border-radius: 30px;
+    height: 40px;
+    width: 30%;
     text-align: center;
 }
 
-.submitButton {
-    background-color: #548119;
-    color: #ffffff;
-    padding: 10px 12px;
-    font-size: 16px;
-    border-radius: 20px;
-    border: 2px solid #ffffff;
-    transition-duration: 0.4s;
-    width: 250px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-
-.submitButton:hover {
-    background-color: #ffffff;
-    color: #548119;
-    border: 2px solid #548119;
-}
-
-.content {
-    margin: 0 30px;
-}
-
-#jeep {
-    border: 3px solid #548119;
-    width: 300px; 
-    height: 400px;
-    margin: 30px 40px 30px 0;
-}
-
-.image {
-    vertical-align: top;
-    display: inline-block;
-    padding: 0;
+.intro h1 {
     margin: 0;
-}
+    position: relative;
+    left: 640px;
+    top: 30%;
 
-.description {
-    vertical-align: top;
-    display: inline-block;
-    width: 1400px;
-    font-size: 20px;
-    
-    background-color: antiquewhite;
-    padding: 0 20px;
-    margin: 30px 0;
-    border: 3px solid black;
-    border-radius: 20px;
-}
-
-#quicksignup {
-    text-decoration: none; 
-    background-color: white; 
-    color: black; 
-    border: 2px solid #548119; 
-    border-radius: 10px; 
-    padding: 10px; 
-    transition-duration: 0.4s;
-}
-
-#quicksignup:hover {
-    background-color: #91dd8a; 
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 60px;
+    color: rgb(255, 255, 255);
+    white-space:pre-wrap;
+    line-height: 140%;
 }

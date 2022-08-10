@@ -7,55 +7,17 @@
 {% block body %} 
 <div class ='container'> <!--Total container-->
     <form method="POST">
+        
+        <!--Intro-->         
+        <div class='intro'>
+            <h1> Create your story, &NewLine; &Tab; starting from here </h1>
 
-        <!--Header-->
-        <div class='header'>
-            <h1> Welcome to Cars4Sale! </h1>
-        </div> <!--Header-->
+            <!--Search-->
+            <div class='search'>
+                <input class='searchBar' id="search" name="search" placeholder="Search by Model/Type/Brand"></input>                     
+            </div> <!--Search-->
 
-        <!--Search-->
-        <div class='search'>
-            <h2> Please enter the type of car you would like: </h2>
-
-            <p style="margin: 0px; padding: 0 0 20px 0; font-size: 12px;"> *If left empty, all results will be displayed* <p>
-
-            <input class='searchBar' id="search" name="search" placeholder="Search by Model/Type/Brand"></input> 
-            <br/> <br/>
-            
-            <button class="submitButton" type="submit" value="Submit">Submit</button>
-        </div> <!--Search-->
-
-        <!--Content-->         
-        <div class='content'>
-
-            <!--Jeep image-->
-            <div class='image'>
-                <img src='static/main-content.jpeg' id='jeep' alt='jeep in the plains'>
-            </div> <!--Jeep image-->
-
-            <!--Description-->
-            <div class='description'>
-                <h2> Welcome To Your New Go-To For Car Deals! </h2>
-                <p><b>Cars4Sale is creating a brand new meaning to quick and easy shopping!</b></p>
-                <p>  
-                    Our car inventory data is collected through sites <b>all over the world</b>, and is provided to you
-                    with <b>free</b> and <b>immediate</b> access! 
-                </p>
-                <p>
-                    Not only do we provide the descriptions of each car within our inventory, but we also provide links and 
-                    neccessary information that will allow you to quickly find the most suitable car for you!
-                </p>
-                <p>
-                    Register now with our site, and <b>not only</b> gain access to bookmarking deals that have intrigued you, but also benefit from using our 
-                    <b>filter functions</b> so that you may look for cars that match your needs!
-                </p>
-                <p>
-                    <br/>
-                    <h3><a href='/register' id='quicksignup'>Sign Up Now!</a><h3>
-                </p>
-            </div>  <!--Desc-->
-
-        </div> <!--Content-->
+        </div> <!--Intro-->
 
     </form>
 <div class = 'container'>
