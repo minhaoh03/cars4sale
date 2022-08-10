@@ -2,7 +2,7 @@ body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     margin: 0px;
     padding: 0px;
-    background-color: rgba(121, 121, 121, 0.685);
+    background-color: rgb(204, 204, 204);
 }
 
 .navbar {
@@ -12,11 +12,12 @@ body {
     height: 59px;
     overflow: hidden;
     background-color: #2e2e2ee0;
+    box-shadow: 0px 0px 12px 8px rgba(0, 0, 0, 0.35);
 }
 
 .authnav {
     position: absolute;
-    left: 1400px;
+    left: 1450px;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
@@ -34,6 +35,7 @@ body {
     border: 0;
     left: 55px;
     top: 15px;
+    cursor: pointer;
 }
 
 .authnav:hover .authDropdown {
@@ -73,7 +75,7 @@ body {
 
 .sitenav {
     position: absolute;
-    left: 1250px;
+    left: 1300px;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
@@ -119,7 +121,7 @@ body {
 
 .navbar label {
     position: relative;
-    left: 1270px;
+    left: 1315px;
     top: 12px;
     color: white;
     font-size: 30px;
@@ -130,13 +132,12 @@ body {
     text-decoration: underline;
 }
 
-
 .flash {
     margin: 10px 20px;
     padding: 10px;
     text-align: center;
     border-radius: 20px;
-    z-index: 2;
+    z-index: 1;
 }
 
 .success {
@@ -161,6 +162,7 @@ body {
     font-size: 22px;
     border: 0px;
     background-color: rgba(0, 0, 0, 0);
+    z-index: 1;
 }
 
 .close:hover {

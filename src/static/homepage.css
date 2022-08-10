@@ -18,7 +18,6 @@
 .intro {
     position: absolute;
     top: 59px; left: 0;
-    
     width: 100%;
     height: 65%;
 }
@@ -31,6 +30,7 @@
     background-position: center;
     filter: brightness(70%);
     width: 100%; height: 100%;
+    z-index: -1;
 }
 
 .search {

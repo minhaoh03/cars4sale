@@ -1,57 +1,150 @@
+#searchDetails {
+    position: relative;
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    left: 370px;
+    top: 75px;
+}
+
+.filter {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    height: 2000px;
+    left: 0; top: 0;
+    border: 2px solid black;
+    background-color: #aaaaaa;
+}
+
+#searchBar {
+    position: relative;
+    padding: 8px 12px 8px 35px;
+    font-size: 18px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    caret-color: #548119;
+    background: url(/static/searchbaricon.png) left no-repeat#ffffff;
+    background-size: 20px;
+    background-position: 2%;
+    
+    border: 3px solid #caffd3;
+    border-radius: 30px;
+
+    top: 10px;
+    left: 20px;
+    height: 25px;
+    width: 250px;
+    text-align: center;
+}
+
 .results {
     position: absolute;
-    left: 130px;
+    left: 360px;
+    top: 150px;
     flex-direction: row;
     display: flex;
     flex-wrap: wrap;
 }
 
 .resultsItems {
+    position: relative;
     padding: 0;
     margin: 10px;
-    width: 300px;
-    height: 400px;
-    text-align: center;
-    border: 2px solid #c0c0c0;
+    width: 360px;
+    height: 420px;
+    text-align: left;
+    border: 1px solid #c0c0c0;
+    border-radius: 10px;
     word-wrap: break-word;
+    overflow: hidden;
+    box-shadow: 4px 4px 8px 2px rgba(68, 68, 68, 0.2);
+    transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .resultsItems:hover {
-    border: 2px solid #4f9932;
+    border: 1px solid rgb(146, 146, 146);
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
 }
 
 .resultImage {
-    height: 225px;
+    height: 270px;
 }
 
 .resultImage img {
-    width: 300px;
-    height: 225px;
+    width: 360px;
+    height: 270px;
 }
 
 .resultDesc {
-    height: 175px;
-    background-color: #cedee9;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+    width: 360px;
+    background-color: #ffffff;
 }
 
 .itemTitle {
-    font-size: 20px;
+    position: relative;
+    top: 5px;
+    left: 10px;
+    width: 340px;
+    height: 50px;
+    color: #5f5f5f;
+    font-size: 16px;
 }
 
 .itemPrice {
-    font-size: 25px;
-    color: #0e6922;
-    font-weight: 700;
+    position: relative;
+    left: 10px;
+    font-size: 20px;
+    color: #1a1a1a;
+    font-weight: 800;
 }
 
 .itemLocation {
+    position: relative;
+    
+    color: #5f5f5f;
     font-size: 15px;
 }
 
 .itemTime {
+    position: relative;
+    color: #5f5f5f;
+    top: 6px;
+    left: 10px;
     font-size: 13px;
 }
 
 .itemUrl {
-    font-size: 15px;
+    position: relative;
+    top: 10px;
+    left: 10px;
+    font-size: 12px;
 }
+
+.itemUrl a {
+    text-decoration: underline;
+    color: #5f5f5f;
+}
+
+#favBtn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-image: url(/static/favicon.png);
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 18px;
+    width: 20px;
+    height: 20px;
+    border: 0;
+}
+
+#favBtn:hover {
+    cursor: pointer;
+}
+
+

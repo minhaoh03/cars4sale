@@ -130,9 +130,9 @@ def results():
     region = request.args.get('region')
     tz = timezone('EST')
     
-    searchLimit = 1         # For how many cars to be returned by pycraigslist
+    searchLimit = 0         # For how many cars to be returned by pycraigslist
     
-    howOld = 5          # For how old the car must be in the database to be shown
+    howOld = 2          # For how old the car must be in the database to be shown
     
     ### POSTS only when favorite button is clicked so far
     if request.method == 'POST':
@@ -149,27 +149,27 @@ def results():
             results = pycraigslist.forsale.cta(site=city, query=search)
             
             ### Search through all the resulting cars that are given by the API ###
-            for car in results.search(limit=searchLimit):       # Search limit applied here
-                carTitle = car['title']         # Current car title
-                carInDB = db.session.query(Car).filter(Car.title==carTitle).first()     # Check car in DB, is None type if not in DB
+            # for car in results.search(limit=searchLimit):       # Search limit applied here
+            #     carTitle = car['title']         # Current car title
+            #     carInDB = db.session.query(Car).filter(Car.title==carTitle).first()     # Check car in DB, is None type if not in DB
                 
-                ### ADD CAR TO DB FILTER ###
-                if carInDB == None and car.get('price') != '$0' and search.lower() in carTitle.lower():       # Car title cannot already be in DB, price cannot be zero, car model must be in title
-                ############################
+            #     ### ADD CAR TO DB FILTER ###
+            #     if carInDB == None and car.get('price') != '$0' and search.lower() in carTitle.lower():       # Car title cannot already be in DB, price cannot be zero, car model must be in title
+            #     ############################
 
-                    ### BeautifulSoup implementation for image scraper ###
-                    soup = BeautifulSoup(requests.get(car.get('url')).text, 'html.parser')
-                    allImgs = soup.find('img')
+            #         ### BeautifulSoup implementation for image scraper ###
+            #         soup = BeautifulSoup(requests.get(car.get('url')).text, 'html.parser')
+            #         allImgs = soup.find('img')
                     
-                    ### MUST HAVE IMAGE FOR THE CAR FOUND ###
-                    if allImgs is not None:     
-                        dateFormat = datetime.strptime(car.get('last_updated'), '%Y-%m-%d %H:%M') # Format of the datetime given by the API to DateTime
+            #         ### MUST HAVE IMAGE FOR THE CAR FOUND ###
+            #         if allImgs is not None:     
+            #             dateFormat = datetime.strptime(car.get('last_updated'), '%Y-%m-%d %H:%M') # Format of the datetime given by the API to DateTime
                         
-                        # Creating the car object
-                        curCar = Car(country='US', region=region, area=car.get('area'), image=allImgs['src'], title=carTitle, price=car.get('price'), link=car.get('url'), datePosted=dateFormat)
+            #             # Creating the car object
+            #             curCar = Car(country='US', region=region, area=car.get('area'), image=allImgs['src'], title=carTitle, price=car.get('price'), link=car.get('url'), datePosted=dateFormat)
                         
-                        db.session.add(curCar)
-                        db.session.commit()
+            #             db.session.add(curCar)
+            #             db.session.commit()
     
     ### ALL CARS IN DATABASE THAT IS VALID TO BE SHOWN ON THE WEBSITE ###
     validCars = [u.__dict__ for u in db.session.query(Car).filter(Car.datePosted >= datetime.now(tz)-timedelta(days=howOld), Car.title.contains(search)).all()]
