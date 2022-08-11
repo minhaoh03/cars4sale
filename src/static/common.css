@@ -3,6 +3,7 @@ body {
     margin: 0px;
     padding: 0px;
     background-color: rgb(204, 204, 204);
+    height: 100%;
 }
 
 .navbar {
@@ -13,6 +14,7 @@ body {
     overflow: hidden;
     background-color: #2e2e2ee0;
     box-shadow: 0px 0px 12px 8px rgba(0, 0, 0, 0.35);
+    z-index: 2;
 }
 
 .authnav {

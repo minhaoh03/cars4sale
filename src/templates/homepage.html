@@ -22,7 +22,71 @@
     </form>
 
     <div class='carousel'>
+        <div class='carouselItem fade'>
+            <div class='carouselContent'>
+                <span class='carouselHeader'>
+                    Why our site?
+                </span>
+                <span class='carouselText'> 
+                    <ul>
+                        <li> Inventory data gathered from everywhere </li>
+                        <li> Quick and easy access to all dealers/sellers </li>
+                        <li> Precise and useful filtering and bookmarking functions </li>
+                    </ul>
+                </span>
+            </div>
+        </div>
+        <div class='carouselItem fade'>
+            <div class='carouselContent'>
+                <span class='carouselHeader'>
+                    Automatic and instant details
+                </span>
+                <span class='carouselText'>
+                    Our data is collected instantaneously, and is constantly &NewLine; updated for your buying pleasure
+                </span>
+            </div>
+        </div>
+        <div class='carouselItem fade'>
+            <div class='carouselContent'>
+                <span class='carouselHeader'>
+                    All around the world
+                </span>
+                <span class='carouselText'>
+                    Enjoy finding your next deal from locations all over the world
+                </span>
+            </div>
+        </div>
 
+        <a class='prev' onclick='moveSlide(-1)'>&#10094;</a>
+        <a class='next' onclick='moveSlide(1)'>&#10095;</a>
     </div>
+
+    
 </div>
+{% endblock %}
+
+{% block scripts %} 
+<script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function moveSlide(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("carouselItem");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[slideIndex-1].style.display = "flex";
+    }
+</script>
 {% endblock %}
