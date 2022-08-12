@@ -23,33 +23,34 @@
         <div class = 'results'> <!--All Results Container-->
             {% for carDetail in Result %}
                 <div class = 'resultsItems'> <!--Each Result Item-->
-
                     <div class = 'resultImage'>
                         <!--Image-->  
-                            <img src="{{ carDetail.get("image") }}">
+                            <img src="{{ carDetail.carImage }}">
                     </div>
                     
                     <div class = 'resultDesc'>
                         <!--Title-->
-                        <span class = 'itemTitle'> {{carDetail.get("title")}} </span>
+                        <span class = 'itemTitle'> {{ carDetail.carTitle }} </span>
                         
                         <!--Price-->
-                        <span class = 'itemPrice'> {{carDetail.get("price")}} </span>
-                                                        
-                        <!--Location-->
-                        <!--<span class = 'itemLocation'> {{carDetail.get("neighborhood")}} </span>
-                         -->
+                        <span class = 'itemPrice'> {{ carDetail.carPrice }} </span>
 
                         <!--Last Updated-->
-                        <span class = 'itemTime'> {{carDetail.get("datePosted")}} </span>
+                        <span class = 'itemTime'> {{ carDetail.carDatePosted }} </span>
 
                         <!--Url-->
-                        <span class = 'itemUrl'><a href={{carDetail.get("link")}}> Link to the Sale! </a></span>
+                        <span class = 'itemUrl'><a href={{ carDetail.carLink }}> Link to the Sale! </a></span>
                         
                         <!--Favorite Button (Only when User is authenticated)-->
                         {% if current_user.is_authenticated %}
-                            <button id='favBtn' name='favButton' type='submit' value={{carDetail.get("id")}}></button>
+                            {% if carDetail in user.favs %}
+                                <button id='fillFavBtn' name='fillFavButton' type='submit' value={{ carDetail.carID }}></button>
+                            {% else %}
+                                <button id='favBtn' name='favButton' type='submit' value={{ carDetail.carID }}></button>
+                            {% endif %}
                         {% endif %}
+
+                        
                         
                     </div>
                 </div> <!--resultItems-->
@@ -57,4 +58,13 @@
         </div> <!--results-->
     </div> <!--container-->
 </form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const btn = document.getElementById('btn');
+    function clicked(){
+        return false;
+    }
+   </script>
 {% endblock %}

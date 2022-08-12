@@ -4,28 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} {% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="/images/webfavicon.png">
     <link rel="stylesheet" href="static/common.css">
+    <link rel="stylesheet" href="static/fonts.css">
     {% block style %} {% endblock %}
 </head>
 <body>
     
     <!--Navbar-->
     <div class="navbar">
-        <span class='logoText'><a href='/'>Cars4Sale</a></span>
-        <a href='/'><img id='logo' src='static/logo.png'/></a>
-        <div class='authnav'>
-            <button name='authBtn'></button>
-            <div class='authDropdown'>
-                <a href="/profile">Profile</a>
-                <a href="/register">Sign Up</a>
-                <a href="/login">Login</a>
-                <a href="/logout">Logout</a>
-            </div>
+        <div class='logo'>
+            <span class='logoText'><a href='/'>Cars4Sale</a></span>
+            <a href='/'><img id='logoImg' src='static/logo.png'/></a>
         </div>
-        <label> | </label>
-        <div class='sitenav'>
-            <span class="navbarItem"><a href="/">Home</a></span>
-            <span class="navbarItem"><a href="/aboutus">About Us</a></span>
+        <div class="ref">
+            <div class='authnav'>
+                <button name='authBtn'></button>
+                <div class='authDropdown'>
+                    {% if not current_user.is_authenticated %}
+                        <a href="/register">Sign Up</a>
+                        <a href="/login">Login</a>
+                    {% endif %}
+                    {% if current_user.is_authenticated %}
+                        <a href="/profile">Profile</a>
+                        <a href="/logout">Logout</a>
+                    {% endif %}
+                </div>
+            </div>
+            <label> | </label>
+            <div class='sitenav'>
+                <span class="navbarItem"><a href="/">Home</a></span>
+                <span class="navbarItem"><a href="/aboutus">About Us</a></span>
+            </div>
         </div>
     </div>
     

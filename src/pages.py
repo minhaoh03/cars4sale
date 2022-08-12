@@ -130,18 +130,27 @@ def results():
     region = request.args.get('region')
     tz = timezone('EST')
     
-    searchLimit = 0         # For how many cars to be returned by pycraigslist
+    searchLimit = 5         # For how many cars to be returned by pycraigslist
     
-    howOld = 2          # For how old the car must be in the database to be shown
+    howOld = 10          # For how old the car must be in the database to be shown
     
     ### POSTS only when favorite button is clicked so far
     if request.method == 'POST':
-        favCar = db.session.query(Car).filter(Car.id==request.form['favButton']).first()       # Button submits the car id of the car tab
-        curUser = db.session.query(User).filter(User.email==session['email']).first()       # Current user is accessed through the email of the session
+        print(request.form.get('favButton'))
+        print(request.form.get('fillFavButton'))
+        favCar = db.session.query(Car).filter(Car.carID==request.form.get('favButton')).first()       # Button submits the car id of the car tab
+        fillFavCar = db.session.query(Car).filter(Car.carID==request.form.get('fillFavButton')).first()
+        curUser = db.session.query(User).filter(User.userEmail==session['email']).first()       # Current user is accessed through the email of the session
         
-        if request.form['favButton'] != '':             # To check if the favorite button was clicked
-            favCar.user = curUser                # Add the car to the favorited cars for the user
+        if request.form.get('favButton') != None:             # To check if the favorite button was clicked
+            curUser.favs.append(favCar)               # Add the car to the favorited cars for the user
             db.session.commit()
+            
+        if request.form.get('fillFavButton') != None:
+            curUser.favs.remove(fillFavCar)
+            db.session.commit()
+        
+            
 
     ### GET for when result page is prompted 
     elif request.method == 'GET':
@@ -149,37 +158,33 @@ def results():
             results = pycraigslist.forsale.cta(site=city, query=search)
             
             ### Search through all the resulting cars that are given by the API ###
-            # for car in results.search(limit=searchLimit):       # Search limit applied here
-            #     carTitle = car['title']         # Current car title
-            #     carInDB = db.session.query(Car).filter(Car.title==carTitle).first()     # Check car in DB, is None type if not in DB
+            for car in results.search(limit=searchLimit):       # Search limit applied here
+                carTitle = car['title']         # Current car title
+                carInDB = db.session.query(Car).filter(Car.carTitle==carTitle).first()     # Check car in DB, is None type if not in DB
                 
-            #     ### ADD CAR TO DB FILTER ###
-            #     if carInDB == None and car.get('price') != '$0' and search.lower() in carTitle.lower():       # Car title cannot already be in DB, price cannot be zero, car model must be in title
-            #     ############################
+                ### ADD CAR TO DB FILTER ###
+                if carInDB == None and car.get('carPrice') != '$0' and search.lower() in carTitle.lower():       # Car title cannot already be in DB, price cannot be zero, car model must be in title
+                ############################
 
-            #         ### BeautifulSoup implementation for image scraper ###
-            #         soup = BeautifulSoup(requests.get(car.get('url')).text, 'html.parser')
-            #         allImgs = soup.find('img')
+                    ### BeautifulSoup implementation for image scraper ###
+                    soup = BeautifulSoup(requests.get(car.get('url')).text, 'html.parser')
+                    allImgs = soup.find('img')
                     
-            #         ### MUST HAVE IMAGE FOR THE CAR FOUND ###
-            #         if allImgs is not None:     
-            #             dateFormat = datetime.strptime(car.get('last_updated'), '%Y-%m-%d %H:%M') # Format of the datetime given by the API to DateTime
+                    ### MUST HAVE IMAGE FOR THE CAR FOUND ###
+                    if allImgs is not None:     
+                        dateFormat = datetime.strptime(car.get('last_updated'), '%Y-%m-%d %H:%M') # Format of the datetime given by the API to DateTime
                         
-            #             # Creating the car object
-            #             curCar = Car(country='US', region=region, area=car.get('area'), image=allImgs['src'], title=carTitle, price=car.get('price'), link=car.get('url'), datePosted=dateFormat)
+                        # Creating the car object
+                        curCar = Car(carCountry='US', carRegion=region, carArea=car.get('area'), carImage=allImgs['src'], carTitle=carTitle, carPrice=car.get('price'), carLink=car.get('url'), carDatePosted=dateFormat)
                         
-            #             db.session.add(curCar)
-            #             db.session.commit()
+                        db.session.add(curCar)
+                        db.session.commit()
     
     ### ALL CARS IN DATABASE THAT IS VALID TO BE SHOWN ON THE WEBSITE ###
-    validCars = [u.__dict__ for u in db.session.query(Car).filter(Car.datePosted >= datetime.now(tz)-timedelta(days=howOld), Car.title.contains(search)).all()]
-                                                                                                                ### howOld ###
+    validCars = db.session.query(Car).filter(Car.carDatePosted >= datetime.now(tz)-timedelta(days=howOld), Car.carTitle.contains(search)).all()
     
-    return render_template('results.html', search=search, region=region, Result=validCars)
+    return render_template('results.html', search=search, region=region, Result=validCars, user=db.session.query(User).filter(User.userEmail==session['email']).first())
 ##################################################################################################################################################################################################################################################################################################################
-
-
-
 
 
 
@@ -193,19 +198,12 @@ def aboutus():
 
 
 
-
-
-
 ##################################### PROFILE PAGE OF CURRENT USER ( ONLY ACCESSIBLE IF SIGNED IN ) #################################################
 @pages.route('/profile', methods=['POST','GET'])                
 @login_required
 def profile():
-    return render_template('profile.html', user=db.session.query(User).filter(User.email==session['email']).first())
+    return render_template('profile.html', user=db.session.query(User).filter(User.userEmail==session['email']).first())
 ###################################################################################################################################################
-
-
-
-
 
 
 
@@ -218,7 +216,7 @@ def register():
         password = request.form.get('pw')
         confpassword = request.form.get('confpw')
         
-        userCheck = User.query.filter_by(email=email).first()            ### Check if user already in DB
+        userCheck = User.query.filter_by(userEmail=email).first()            ### Check if user already in DB
         
         if userCheck:
             flash('Email already exists.', category='ERROR')
@@ -229,7 +227,7 @@ def register():
         elif password != confpassword:
             flash('Invalid Confirmation: Passwords do not match.', category='ERROR')
         else:
-            newUser = User(email=email, password=generate_password_hash(password, method='sha256'))         ### Hash for the password
+            newUser = User(userEmail=email, userPassword=generate_password_hash(password, method='sha256'))         ### Hash for the password
             
             db.session.add(newUser)
             db.session.commit()
@@ -248,9 +246,6 @@ def register():
 
 
 
-
-
-
 ##################################### LOGIN PAGE ################################################################################################
 @pages.route('/login', methods=['POST','GET'])                     
 def login():
@@ -258,10 +253,10 @@ def login():
         email = request.form.get('email')
         password = request.form.get('pw')
         
-        user = User.query.filter_by(email=email).first()        # Find the user with the email that was given
+        user = User.query.filter_by(userEmail=email).first()        # Find the user with the email that was given
         
         if user:
-            if check_password_hash(user.password, password):            # Check the password
+            if check_password_hash(user.userPassword, password):            # Check the password
                 flash('Logged in successfully!', category='SUCCESS')
                 login_user(user)
                 session['email']=email

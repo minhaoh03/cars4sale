@@ -73,6 +73,7 @@
 .resultImage img {
     width: 360px;
     height: 270px;
+    object-fit: cover;
 }
 
 .resultDesc {
@@ -133,7 +134,7 @@
     position: absolute;
     bottom: 10px;
     right: 10px;
-    background-image: url(/static/favicon.png);
+    background-image: url(/static/staricon.png);
     background-color: transparent;
     background-position: center;
     background-repeat: no-repeat;
@@ -143,7 +144,21 @@
     border: 0;
 }
 
-#favBtn:hover {
+#fillFavBtn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-image: url(/static/fillstaricon.png);
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 18px;
+    width: 20px;
+    height: 20px;
+    border: 0;
+}
+
+#favBtn:hover, #fillFavBtn:hover {
     cursor: pointer;
 }
 

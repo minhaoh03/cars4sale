@@ -27,11 +27,11 @@
 .intro h1 {
     position: absolute;
     margin: 0;
-    left: 32%;
+    left: 31%;
     top: 30%;
     
 
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: Raleway;
     font-size: 4em;
     color: rgb(255, 255, 255);
     white-space:pre-wrap;
@@ -49,7 +49,7 @@
 .searchBar {
     padding: 8px 12px 8px 35px;
     font-size: 1.2rem;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: Raleway;
     caret-color: #548119;
     background: url(/static/searchbaricon.png) left no-repeat#ffffff;
     background-size: 20px;
@@ -63,7 +63,6 @@
 }
 
 .carousel {
-    background-image: url(/static/carouselbackground.jpg);
     height: 50vh;
     width: 100%;
 }
@@ -76,24 +75,23 @@
     width: 50vw;
     top: 85.5vh;
     left: 25vw;
-    box-shadow: 0px 0px 29px -3px rgba(0,0,0,1) inset;
+    box-shadow: 0px 10px 14px 2px rgb(110, 110, 110);
     border-radius: 20px;
-    background-color: rgb(205, 255, 200);
+    background-color: rgb(214, 255, 210);
 }
 
 /* Next & previous buttons */
 .prev, .next {
     cursor: pointer;
     position: absolute;
-    top: 81.4%;
-    height: 26vh;
+    top: 81%;
+    height: 26.1vh;
     width: auto;
     padding: 23.9vh 16px 0 16px;
     color: rgb(0, 0, 0);
     font-weight: bold;
     font-size: 1em;
     transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
     user-select: none;
 }
 
@@ -105,53 +103,60 @@
 
 /* On hover, add a black background color with a little bit see-through */
 .prev:hover, .next:hover {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(105, 105, 105, 0.8);
 }
 
 .carouselContent {
     position: absolute;
     height: 34vh;
     width: 43.5vw;
-    border: 5px double rgb(152, 180, 255);
-    border-radius: 20px;
-    top: 3.5vh;
-    left: 3vw;
+    top: 3vh;
+    left: 1vw;
 }
 
 .carouselHeader {
     position: absolute;
     color: #000000;
-    font-size: 2em;
+    font-size: 2.5em;
     top: 15%;
     left: 5vw;
-    width: 100%;
+    width: 70%;
     text-align: left;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Albert Sans;
     font-weight: 800;
+    text-decoration: underline;
 }
 
 /* Caption text */
 .carouselText {
     position: absolute;
     color: #000000;
-    font-size: 1.3em;
-    top: 33%;
+    font-size: 1.5em;
+    top: 40%;
     left: 5vw;
-    width: 100%;
+    width: 60%;
     height: 15vh;
     text-align: left;
-    line-height: 120%;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: Albert Sans;
 }
 
 .carouselText ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
+    line-height: 130%;
 }
 
 .carouselText li {
     margin: 1vh 0;
+}
+
+.carouselItem img {
+    position: absolute;
+    right: 0;
+    top: 30%;
+    height: 16vh;
+    width: 8vw;
 }
 
 /* Fading animation */

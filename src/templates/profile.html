@@ -6,10 +6,10 @@ Cars4Sale - About Us
 
 {% block body %}
 This is the profile page.
-This is your email: {{ user.email }}
+This is your email: {{ user.userEmail }}
 Here are your favorited items: 
 {% for fav in user.favs %}
     <br/>
-    {{ fav.title }}
+    {{ fav.carTitle }}
 {% endfor %}
 {% endblock %}
