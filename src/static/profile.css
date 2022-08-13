@@ -1,0 +1,55 @@
+.accInfo {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    top: 2vh;
+    left: 13vw;
+    width: 40vw;
+    background-color: rgb(226, 255, 219);
+    border: 5px solid black;
+    border-radius: 20px;
+}
+
+.accInfo h1 {
+    position: inherit;
+    padding: 0 0 0 1vw;
+    font-family: 'Lato';
+    font-size: 40px;
+}
+
+.info {
+    position: inherit;
+    padding: 1vh 1vw;
+    font-family: 'Lato';
+    font-size: 20px;
+}
+
+.allFav {
+    position: relative;
+    border: 5px solid black;
+    top: 5vh;
+    left: 13vw;
+    justify-content: left;
+    height: auto;
+    width: 82vw;
+    padding-bottom: 5vh;
+
+    border-radius: 20px;
+    background-color: rgb(255, 255, 255);
+}
+
+#favCars {
+    position: relative;
+    left: 1.5vw;
+    top: 2vh;
+    font-family: 'Lato';
+}
+
+.favorites {
+    position: relative;
+    top: 2vh;
+    left: 1vw;
+    flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+}

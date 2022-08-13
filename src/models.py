@@ -14,8 +14,8 @@ class User(db.Model, UserMixin):
     __tablename__ = 'users'
     
     userID = db.Column(db.Integer, primary_key=True)
+    userUsername = db.Column(db.Integer, unique=True)
     userEmail = db.Column(db.String(150), unique=True, nullable=False)
-    userUsername = db.Column(db.String(24), unique=True)
     userPassword = db.Column(db.String(150), nullable=False)
     
     favs = db.relationship('Car', secondary=userCarTable, backref=db.backref('user'))           # Linked to favorited cars in the Car model

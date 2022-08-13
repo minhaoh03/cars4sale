@@ -136,8 +136,6 @@ def results():
     
     ### POSTS only when favorite button is clicked so far
     if request.method == 'POST':
-        print(request.form.get('favButton'))
-        print(request.form.get('fillFavButton'))
         favCar = db.session.query(Car).filter(Car.carID==request.form.get('favButton')).first()       # Button submits the car id of the car tab
         fillFavCar = db.session.query(Car).filter(Car.carID==request.form.get('fillFavButton')).first()
         curUser = db.session.query(User).filter(User.userEmail==session['email']).first()       # Current user is accessed through the email of the session
@@ -163,7 +161,7 @@ def results():
                 carInDB = db.session.query(Car).filter(Car.carTitle==carTitle).first()     # Check car in DB, is None type if not in DB
                 
                 ### ADD CAR TO DB FILTER ###
-                if carInDB == None and car.get('carPrice') != '$0' and search.lower() in carTitle.lower():       # Car title cannot already be in DB, price cannot be zero, car model must be in title
+                if carInDB == None and car.get('price') != '$0' and search.lower() in carTitle.lower():       # Car title cannot already be in DB, price cannot be zero, car model must be in title
                 ############################
 
                     ### BeautifulSoup implementation for image scraper ###
@@ -181,7 +179,7 @@ def results():
                         db.session.commit()
     
     ### ALL CARS IN DATABASE THAT IS VALID TO BE SHOWN ON THE WEBSITE ###
-    validCars = db.session.query(Car).filter(Car.carDatePosted >= datetime.now(tz)-timedelta(days=howOld), Car.carTitle.contains(search)).all()
+    validCars = db.session.query(Car).filter(Car.carDatePosted >= datetime.now(tz)-timedelta(days=howOld), Car.carTitle.contains(search), Car.carPrice!='$0').all()
     
     return render_template('results.html', search=search, region=region, Result=validCars, user=db.session.query(User).filter(User.userEmail==session['email']).first())
 ##################################################################################################################################################################################################################################################################################################################
@@ -202,6 +200,15 @@ def aboutus():
 @pages.route('/profile', methods=['POST','GET'])                
 @login_required
 def profile():
+    if request.method == 'POST':
+        print(request.form.get('fillFavButton'))
+        fillFavCar = db.session.query(Car).filter(Car.carID==request.form.get('fillFavButton')).first()
+        curUser = db.session.query(User).filter(User.userEmail==session['email']).first()       # Current user is accessed through the email of the session
+        
+        if request.form.get('fillFavButton') != None:
+            curUser.favs.remove(fillFavCar)
+            db.session.commit()
+        
     return render_template('profile.html', user=db.session.query(User).filter(User.userEmail==session['email']).first())
 ###################################################################################################################################################
 
@@ -212,14 +219,18 @@ def profile():
 @pages.route('/register', methods=['POST','GET'])                           
 def register():
     if request.method == 'POST':
+        username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('pw')
         confpassword = request.form.get('confpw')
         
         userCheck = User.query.filter_by(userEmail=email).first()            ### Check if user already in DB
+        userNameCheck = User.query.filter_by(userUsername=username).first()
         
         if userCheck:
             flash('Email already exists.', category='ERROR')
+        elif userNameCheck:
+            flash('Username already exists.', cateogry='ERROR')
         elif len(email) < 4:
             flash('Invalid Email: Email must be greater than 4 characters.', category='ERROR')
         elif len(password) < 6:
@@ -227,7 +238,7 @@ def register():
         elif password != confpassword:
             flash('Invalid Confirmation: Passwords do not match.', category='ERROR')
         else:
-            newUser = User(userEmail=email, userPassword=generate_password_hash(password, method='sha256'))         ### Hash for the password
+            newUser = User(userUsername=username, userEmail=email, userPassword=generate_password_hash(password, method='sha256'))         ### Hash for the password
             
             db.session.add(newUser)
             db.session.commit()

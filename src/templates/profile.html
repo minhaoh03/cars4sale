@@ -1,15 +1,48 @@
 {% extends "base.html" %}
 
 {% block title %}
-Cars4Sale - About Us
+Cars4Sale - Profile
 {% endblock %}
 
+{% block style %} <link rel="stylesheet" href="static/caritem.css"> <link rel="stylesheet" href="static/profile.css">{% endblock %}
+
 {% block body %}
-This is the profile page.
-This is your email: {{ user.userEmail }}
-Here are your favorited items: 
-{% for fav in user.favs %}
-    <br/>
-    {{ fav.carTitle }}
-{% endfor %}
+<form method='POST'>
+    <div class='accInfo'>
+        <h1> Account Information </h1>
+        <span class='info'><b>Username: </b> {{ user.userUsername }} </span>
+        <span class='info'><b>Email: </b> {{ user.userEmail }} </span>
+    </div>
+        <div class='allFav'>
+            <h1 id='favCars'> Favorited Cars: </h1>
+            <div class = 'favorites'> <!--All Results Container-->
+                {% for fav in user.favs %}
+                    <div class = 'resultsItems'> <!--Each Result Item-->
+                        <div class = 'resultImage'>
+                            <!--Image-->  
+                                <img src="{{ fav.carImage }}">
+                        </div>
+                        
+                        <div class = 'resultDesc'>
+                            <!--Title-->
+                            <span class = 'itemTitle'> {{ fav.carTitle }} </span>
+                            
+                            <!--Price-->
+                            <span class = 'itemPrice'> {{ fav.carPrice }} </span>
+
+                            <!--Last Updated-->
+                            <span class = 'itemTime'> {{ fav.carDatePosted }} </span>
+
+                            <!--Url-->
+                            <span class = 'itemUrl'><a href={{ fav.carLink }}> Link to the Sale! </a></span>
+                            
+                            <!--Favorite Button-->
+                            <button id='fillFavBtn' name='fillFavButton' type='submit' value={{ fav.carID }}></button>
+                        </div>
+                    </div> <!--resultItems-->
+                {% endfor %}
+            </div> <!--favorites-->
+        </div>
+    </div>
+</form>
 {% endblock %}
