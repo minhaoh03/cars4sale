@@ -31,10 +31,6 @@ from pytz import timezone
 pages = Blueprint('pages', __name__)    
 
 
-
-
-
-
 ### Craigslist State to Site Map !!!! FOR US ONLY SO FAR !!!!
 stateMap = {'Alabama' : ['bham', 'mobile', 'montgomery', 'huntsville', 'tuscaloosa', 'auburn', 'dothan', 'gadsden', 'shoals'],
             'Alaska' : ['anchorage', 'juneau', 'fairbanks', 'kenai'],
@@ -96,20 +92,16 @@ def getLocation(ip):
     return js
 
 
-
-
-
-
-
 #################################### HOME PAGE ###########################################
 @pages.route('/', methods=['POST','GET'])                       
 def homepage():
     ### Replace IP with request IP getter on deployment ###
-    #ip = request.headers.get('X-Forwarded-For', request.remote_addr) 
-    ip = '100.36.38.25' 
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr) 
+    print(ip)
     
     location = getLocation(ip) # Returns a dictionary of location details
     region = location.get('regionName')
+    print(region)
     
     # When search is posted
     if request.method == 'POST':  
@@ -121,20 +113,19 @@ def homepage():
 
 
 
-
-
 #################################### RESULTS PAGE #########################################
 @pages.route('/results', methods=['POST','GET'])                    
 def results():
     search = request.args.get('search')
     region = request.args.get('region')
+    print(region)
     tz = timezone('EST')
     
     searchLimit = 5         # For how many cars to be returned by pycraigslist
     
     howOld = 10          # For how old the car must be in the database to be shown
     
-    ### POSTS only when favorite button is clicked so far
+    ### POST
     if request.method == 'POST':
         favCar = db.session.query(Car).filter(Car.carID==request.form.get('favButton')).first()       # Button submits the car id of the car tab
         fillFavCar = db.session.query(Car).filter(Car.carID==request.form.get('fillFavButton')).first()
@@ -147,8 +138,34 @@ def results():
         if request.form.get('fillFavButton') != None:
             curUser.favs.remove(fillFavCar)
             db.session.commit()
-        
             
+        if request.form.get('search') != None:
+            postedSearch = request.form.get('search')      
+            return redirect(url_for('pages.results', 
+                                    search=postedSearch, 
+                                    region=region, 
+                                    has_image=request.form.get('filterImg'), 
+                                    posted_today=request.form.get('filterToday'), 
+                                    search_distance=request.form.get('filterDist'), 
+                                    zip_code=request.form.get('filterZip'), 
+                                    min_price=request.form.get('filterMinPrice'), 
+                                    max_price= request.form.get('filterMaxPrice'), 
+                                    min_year=request.form.get('filterMinYear'),
+                                    max_year=request.form.get('filterMaxYear'),
+                                    min_miles=request.form.get('filterMinMiles'),
+                                    max_miles=request.form.get('filterMaxMiles'),
+                                    min_engine_displacement=request.form.get('filterMinEng'),
+                                    max_engine_displacement=request.form.get('filterMaxEng'),
+                                    condition=request.form.get('filterConditionList').value, 
+                                    auto_cylinders=request.form.get('filterCylindersList').value, 
+                                    auto_drivetrain=request.form.get('filterDriveList').value, 
+                                    auto_fuel_type=request.form.get('filterFuelList').value, 
+                                    auto_paint=request.form.get('filterPaintList').value, 
+                                    auto_size=request.form.get('filterSizeList').value, 
+                                    auto_title_status=request.form.get('filterTitleList').value, 
+                                    auto_transmission=request.form.get('filterTransList').value, 
+                                    auto_bodytype=request.form.get('filterBodyList').value, 
+                                    language=request.form.get('filterLangList').value))
 
     ### GET for when result page is prompted 
     elif request.method == 'GET':
@@ -161,7 +178,7 @@ def results():
                 carInDB = db.session.query(Car).filter(Car.carTitle==carTitle).first()     # Check car in DB, is None type if not in DB
                 
                 ### ADD CAR TO DB FILTER ###
-                if carInDB == None and car.get('price') != '$0' and search.lower() in carTitle.lower():       # Car title cannot already be in DB, price cannot be zero, car model must be in title
+                if carInDB == None and car.get('price') >= '$100' and search.lower() in carTitle.lower():       # Car title cannot already be in DB, price cannot be zero, car model must be in title
                 ############################
 
                     ### BeautifulSoup implementation for image scraper ###

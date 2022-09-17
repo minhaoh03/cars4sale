@@ -36,6 +36,7 @@
     height: 150px;
     width: 360px;
     background-color: #ffffff;
+    overflow: hidden
 }
 
 .itemTitle {

@@ -15,9 +15,134 @@
             {% endif %}
                 in the {{ region }} area     
         </span>  
-        <div class = 'filter'>
+        <div class = 'filters'>
             <div class='search'>
                 <input id="searchBar" name="search" placeholder="Search"></input>                     
+            </div>
+            <div class='allFilters'>
+                <span id='filterImg' name='filterImg'>Image? <input type="checkbox"></span>
+                <span id='filterToday' name='filterToday'>Posted Today? <input type="checkbox"></span>
+                <span id='filterDist' name='filterDistance'>Search Distance: <textarea> </textarea></span>
+                <span id='filterZip' name='filterZip'>Zip Code:<textarea> </textarea></span>
+                <span id='filterMinPrice' name='filterMinPrice'>Minimum Price:</span>
+                <span id='filterMaxPrice' name='filterMaxPrice'>Maximum Price:</span>
+                <span id='filterMinYear' name='filterMinYear'>Minimum Year:</span>
+                <span id='filterMaxYear' name='filterMaxYear'>Maximum Year:</span>
+                <span id='filterMinMile' name='filterMinMile'>Minimum Miles:</span>
+                <span id='filterMaxMile' name='filterMaxMile'>Maximum Miles:</span>
+                <span id='filterMinEng' name='filterMinEng'>Minimum Engine Displacement:</span>
+                <span id='filterMaxEng' name='filterMaxEng'>Maximum Engine Displacement:</span>
+                <span id='filterCondition' name='filterCondition'>Condition:
+                <select id='filterConditionList' name='filterConditionList'> 
+                    <option value="new"> New </option>
+                    <option value="like new"> Like New </option>
+                    <option value="excellent"> Excellent </option>
+                    <option value="good"> Good </option>
+                    <option value="fair"> Fair </option>
+                    <option value="salvage"> Salvage </option>
+                </select></span>
+                <span id='filterCylinders' name='filterCylinders'>Cylinders:
+                <select id='filterCylindersList' name='filterCylindersList'> 
+                    <option value="3 cylinders"> 3 Cylinders </option>
+                    <option value="4 cylinders"> 4 Cylinders </option>
+                    <option value="5 cylinders"> 5 Cylinders </option>
+                    <option value="6 cylinders"> 6 Cylinders </option>
+                    <option value="8 cylinders"> 8 Cylinders </option>
+                    <option value="10 cylinders"> 10 Cylinders </option>
+                    <option value="12 cylinders"> 12 Cylinders </option>
+                    <option value="other"> Other </option>
+                </select></span>
+                <span id='filterDrive' name='filterDrive'>Drivetrain:
+                <select id='filterDriveList' name='filterDriveList'> 
+                    <option value="fwd"> Front Wheel Drive </option>
+                    <option value="rwd"> Rear Wheel Drive </option>
+                    <option value="4wd"> 4 Wheel Drive </option>
+                </select></span>
+                <span id='filterFuel' name='filterFuel'>Fuel Type:
+                <select id='filterFuelList' name='filterFuelList'> 
+                    <option value="gas"> Gas </option>
+                    <option value="diesel"> Diesel </option>
+                    <option value="hybrid"> Hybrid </option>
+                    <option value="electric"> Electric </option>
+                    <option value="other"> Other </option>
+                </select></span>
+                <span id='filterPaint' name='filterPaint'>Paint:
+                <select id='filterPaintList' name='filterPaintList'> 
+                    <option value="black"> Black </option>
+                    <option value="blue"> Blue </option>
+                    <option value="brown"> Brown </option>
+                    <option value="green"> Green </option>
+                    <option value="grey"> Grey </option>
+                    <option value="orange"> Orange </option>
+                    <option value="purple"> Purple </option>
+                    <option value="red"> Red </option>
+                    <option value="silver"> Silver </option>
+                    <option value="white"> White </option>
+                    <option value="yellow"> Yellow </option>
+                    <option value="custom"> Custom </option>
+                </select></span>
+                <span id='filterSize' name='filterSize'>Size:
+                <select id='filterSizeList' name='filterSizeList'> 
+                    <option value="compact"> Compact </option>
+                    <option value="full-size"> Full-Size </option>
+                    <option value="mid-size"> Mid-Size </option>
+                    <option value="sub-compact"> Sub-Compact </option>
+                </select></span>
+                <span id='filterTitle' name='filterTitle'>Title Status:
+                <select id='filterTitleList' name='filterTitleList'> 
+                    <option value="clean"> Clean </option>
+                    <option value="salvage"> Salvage </option>
+                    <option value="rebuilt"> Rebuilt </option>
+                    <option value="parts only"> Parts only </option>
+                    <option value="lien"> Lien </option>
+                    <option value="missing"> Missing </option>
+                </select></span>
+                <span id='filterTrans' name='filterTrans'>Transmission:
+                <select id='filterTransList' name='filterTransList'> 
+                    <option value="manual"> Manual </option>
+                    <option value="automatic"> Automatic </option>
+                    <option value="other"> Other </option>
+                </select></span>
+                <span id='filterBody' name='filterBody'>Bodytype:
+                <select id='filterBodyList' name='filterBodyList'> 
+                    <option value="bus"> Bus </option>
+                    <option value="convertible"> Convertible </option>
+                    <option value="coupe"> Coupe </option>
+                    <option value="hatchback"> Hatchback </option>
+                    <option value="mini-van"> Mini-van </option>
+                    <option value="offroad"> Offroad </option>
+                    <option value="pickup"> Pickup </option>
+                    <option value="sedan"> Sedan </option>
+                    <option value="truck"> Truck </option>
+                    <option value="SUV"> SUV </option>
+                    <option value="wagon"> Wagon </option>
+                    <option value="van"> Van </option>
+                    <option value="other"> Other </option>
+                </select></span>
+                <span id='filterLang' name='filterLang'>Language:
+                <select id='filterLangList' name='filterLangList'> 
+                    <option value="afrikaans"> Afrikaans </option>
+                    <option value="català"> Catalan </option>
+                    <option value="dansk"> Danish </option>
+                    <option value="deutsch"> German </option>
+                    <option value="english"> English </option>
+                    <option value="español"> Spanish </option>
+                    <option value="suomi"> Finnish </option>
+                    <option value="français"> French </option>
+                    <option value="italiano"> Italian </option>
+                    <option value="nederlands"> Netherland </option>
+                    <option value="norsk"> Norwegian </option>
+                    <option value="português"> Portuguese </option>
+                    <option value="svenska"> Swedish </option>
+                    <option value="filipino"> Filipino </option>
+                    <option value="türkçe"> Turkish </option>
+                    <option value="中文"> Chinese </option>
+                    <option value="العربية"> Arabic </option>
+                    <option value="日本語"> Japanese </option>
+                    <option value="한국말"> Korean </option>
+                    <option value="русский"> Russian </option>
+                    <option value="tiếng việt"> Vietnamese </option>
+                </select></span>
             </div>
         </div>
         <div class = 'results'> <!--All Results Container-->

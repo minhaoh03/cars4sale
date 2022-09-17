@@ -18,9 +18,10 @@ body {
 }
 
 .logo {
+    display: inline-block;
     position: absolute;
     left: 13%;
-    width: 14vw;
+    width: 16vw;
     height: 6vh;
 }
 
@@ -29,7 +30,7 @@ body {
     top: 1vh;
     font-family: Montserrat;
     font-weight: 900;
-    font-size: 30px;
+    font-size: 2vw;
 }
 
 .logoText a {
@@ -38,11 +39,10 @@ body {
 }
 
 #logoImg {
-    position: absolute;
-    height: 30px;
-    width: 80px;
+    position: relative;
+    height: 3vh;
+    width: 4vw;
     top: 27%;
-    left: 60%;
     padding: 0;    
 }
 
